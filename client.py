@@ -1,7 +1,8 @@
 from utils import *
 from models import DefaultABIs, TokenAmount
-from models import Network
+from models import Network, Ethereum
 from config import TOKEN_ABI
+from settings import MAX_GAS_ETH, CHECK_GWEI
 
 
 class Client:
@@ -121,6 +122,8 @@ class Client:
             return None
 
         sign = self.w3.eth.account.sign_transaction(tx_params, self.private_key)
+        if CHECK_GWEI:
+            self.chek_gas_eth()
         return self.w3.eth.send_raw_transaction(sign.rawTransaction)
 
     def verif_tx(self, tx_hash) -> bool:
@@ -186,3 +189,20 @@ class Client:
             logger.error(f'code: {response.status} | json: {response.json()}')
             return None
         return float(result_dict['asks'][0][0])
+    
+    def chek_gas_eth(self):
+        w3_mainnet = Web3(Web3.HTTPProvider(endpoint_uri=Ethereum.rpc))
+        
+        while True:
+            try:
+                res = int(round(Web3.from_wei(w3_mainnet.eth.gas_price, 'gwei')))
+                if res <= MAX_GAS_ETH:
+                    break
+                else:
+                    logger.info(f'Current gas - {res} gwei. Need less than {MAX_GAS_ETH}\n')
+                    time.sleep(60)
+                    continue
+            except Exception as error:
+                logger.error(error)
+                time.sleep(30)
+                continue

@@ -123,7 +123,7 @@ class Network:
 
 Ethereum = Network(
     name='ethereum',
-    rpc='https://mainnet.infura.io/v3/',
+    rpc='https://rpc.ankr.com/eth',
     chain_id=1,
     eip1559_tx=True,
     coin_symbol='ETH',
