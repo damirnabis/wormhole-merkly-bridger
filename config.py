@@ -27,3 +27,17 @@ TOKENS_DATA = {
     'Base' : ('0x2e3e4Cc4c99fEaac88097b1Bc279c7e372BfBdFE', 0.0000021, 30),
     'Ethereum': ('0xac998bda5B8bc9483c90eFBe8B70E11D3C0E8f6f', 0.0000021, 2),
 }
+
+CHAINS_ID = {
+    24: 'Optimism',
+    14: 'Celo',
+    6: 'Avalanche',
+    13: 'Klaytn',
+    4: 'Bsc',
+    16: 'Moonbeam',
+    10: 'Fantom',
+    23: 'Arbitrum',
+    5: 'Polygon',
+    30: 'Base',
+    2: 'Ethereum'   
+}
